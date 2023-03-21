@@ -51,7 +51,7 @@ namespace HotelListing.API.Migrations
                 table: "Hotels",
                 column: "CountryID");
         }
-
+        //
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {

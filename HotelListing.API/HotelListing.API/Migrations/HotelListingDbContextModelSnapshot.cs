@@ -113,7 +113,7 @@ namespace HotelListing.API.Migrations
                             Address = "Nassua",
                             CountryID = 2,
                             Name = "Grand Palldium",
-                            Rating = 4.0
+                            Rating = 4.2000000000000002
                         });
                 });
 
