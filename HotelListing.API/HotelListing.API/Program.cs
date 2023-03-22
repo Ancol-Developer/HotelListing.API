@@ -20,7 +20,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Cấu hình CROS
 builder.Services.AddCors(option => {
     option.AddPolicy("AllowAll",
         b=>b.AllowAnyHeader()
