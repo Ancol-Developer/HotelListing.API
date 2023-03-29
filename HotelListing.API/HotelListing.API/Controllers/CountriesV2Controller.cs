@@ -13,42 +13,35 @@ using HotelListing.API.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using HotelListing.API.Exceptions;
-using HotelListing.API.Models;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace HotelListing.API.Controllers
 {
     [Route("api/v{version:apiVersion}/countries")]
     [ApiController]
-    [ApiVersion("1.0", Deprecated = true)]
+    [ApiVersion("2.0")]
     //[Authorize]
-    public class CountriesController : ControllerBase
+    public class CountriesV2Controller : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly ICountriesRepository _countriesRepository;
-        private readonly ILogger<CountriesController> _logger;
+        private readonly ILogger<CountriesV2Controller> _logger;
 
-        public CountriesController(IMapper mapper,ICountriesRepository countriesRepository,ILogger<CountriesController> logger)
+        public CountriesV2Controller(IMapper mapper,ICountriesRepository countriesRepository,ILogger<CountriesV2Controller> logger)
         {
             _mapper = mapper;
             _countriesRepository = countriesRepository;
             _logger = logger;
         }
 
-        // GET: api/Countries.GetAll
-        [HttpGet("GetAll")]
+        // GET: api/Countries
+        [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetCountries()
         {
             var countries= await _countriesRepository.GetAllAsync();
             var record =_mapper.Map<List<GetCountryDto>>(countries);
             return Ok(record);
-        }
-
-        // GET: api/v1/Countries/?StartIndex=0&pagesize=25&Pagenumber=1
-        [HttpGet]
-        public async Task<ActionResult<PagedResult<GetCountryDto>>> GetPagedCountries([FromQuery] QueryParameters queryParameters)
-        {
-            var pagedCountriesResult = await _countriesRepository.GetAllAsync<GetCountryDto>(queryParameters);
-            return Ok(pagedCountriesResult);
         }
 
         // GET: api/Countries/5
