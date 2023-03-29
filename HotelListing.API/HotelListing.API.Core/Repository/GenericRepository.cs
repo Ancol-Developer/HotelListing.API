@@ -12,14 +12,8 @@ namespace HotelListing.API.Repository
     {
         private readonly HotelListingDbContext _context;
         private readonly IMapper _mapper;
-        private HotelListingDbContext context;
 
-        public GenericRepository(HotelListingDbContext context)
-        {
-            this.context = context;
-        }
-
-        public GenericRepository(HotelListingDbContext context , IMapper mapper)
+        public GenericRepository(HotelListingDbContext context, IMapper mapper )
         {
             _context = context;
             this._mapper = mapper;
@@ -51,19 +45,19 @@ namespace HotelListing.API.Repository
 
         public async Task<PagedResult<TResult>> GetAllAsync<TResult>(QueryParameters queryParameters)
         {
-            var totalsize= await _context.Set<T>().CountAsync();
+            var totalSize = await _context.Set<T>().CountAsync();
             var items = await _context.Set<T>()
                 .Skip(queryParameters.StartIndex)
-                .Take(queryParameters.Pagesize)
+                .Take(queryParameters.PageSize)
                 .ProjectTo<TResult>(_mapper.ConfigurationProvider)
                 .ToListAsync();
-            return new PagedResult<TResult> 
-            { 
+            return new PagedResult<TResult>
+            {
                 Items = items,
                 PageNumber= queryParameters.PageNumber,
-                RecordNumber= queryParameters.Pagesize,
-                TotalCount= totalsize
-            };
+                RecordNumber= queryParameters.PageSize,
+                TotalCount= totalSize,
+            }
         }
 
         public async Task<T> GetAsync(int? id)
