@@ -54,10 +54,10 @@ namespace HotelListing.API.Repository
             return new PagedResult<TResult>
             {
                 Items = items,
-                PageNumber= queryParameters.PageNumber,
-                RecordNumber= queryParameters.PageSize,
-                TotalCount= totalSize,
-            }
+                PageNumber = queryParameters.PageNumber,
+                RecordNumber = queryParameters.PageSize,
+                TotalCount = totalSize,
+            };
         }
 
         public async Task<T> GetAsync(int? id)
